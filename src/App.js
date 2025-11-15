@@ -71,6 +71,7 @@ const SparkedIn = () => {
   const [isGeneratingDescription, setIsGeneratingDescription] = useState(false);
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
+  const videoRef = useRef(null);
 
   const discoveryQuestions = [
     "Hi! I'm SparkedIn, and I'm here to help you discover your spark AND build an amazing portfolio. Let's start - what's your name?",
@@ -886,6 +887,51 @@ const SparkedIn = () => {
     },
   ];
 
+  // Sample media items for demo purposes
+  const sampleMediaItems = [
+    {
+      id: "sample-1",
+      type: "video",
+      title: "Dance Performance Reel",
+      description:
+        "A compilation of my best choreography and performance moments from various shows",
+      url: "sample", // Will use placeholder
+      thumbnail:
+        "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI2VjNGE5OSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjI0IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iIGZvbnQtZmFtaWx5PSJBcmlhbCI+8J+SgyBEYW5jZSBSZWVsPC90ZXh0Pjwvc3ZnPg==",
+      likes: 45,
+      views: 234,
+      tags: ["Dance", "Performance", "Choreography"],
+      uploadDate: new Date().toISOString(),
+    },
+    {
+      id: "sample-2",
+      type: "image",
+      title: "Event Photography",
+      description:
+        "Professional event coverage showcasing my eye for capturing authentic moments",
+      url: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MzMzZWE7c3RvcC1vcGFjaXR5OjEiIC8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZWM0YTk5O3N0b3Atb3BhY2l0eToxIiAvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSJ1cmwoI2dyYWQpIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSIgZm9udC1mYW1pbHk9IkFyaWFsIj7wn"PRiiBFdmVudCBQaG90bzwvdGV4dD48L3N2Zz4=',
+      thumbnail:
+        'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MzMzZWE7c3RvcC1vcGFjaXR5OjEiIC8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZWM0YTk5O3N0b3Atb3BhY2l0eToxIiAvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSJ1cmwoI2dyYWQpIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSIgZm9udC1mYW1pbHk9IkFyaWFsIj7wn"PRiiBFdmVudCBQaG90bzwvdGV4dD48L3N2Zz4=',
+      likes: 67,
+      views: 189,
+      tags: ["Photography", "Events", "Visual Storytelling"],
+      uploadDate: new Date().toISOString(),
+    },
+    {
+      id: "sample-3",
+      type: "audio",
+      title: "Original Beat Production",
+      description:
+        "Hip-hop influenced beat showcasing my production style and sound design skills",
+      url: "sample",
+      thumbnail: null,
+      likes: 34,
+      views: 156,
+      tags: ["Music Production", "Audio Engineering", "Hip Hop"],
+      uploadDate: new Date().toISOString(),
+    },
+  ];
+
   useEffect(() => {
     if (step === "interview" && messages.length === 0) {
       setTimeout(() => addBotMessage(discoveryQuestions[0]), 500);
@@ -991,7 +1037,6 @@ const SparkedIn = () => {
     if (currentQuestion === 0) {
       const name = userMessage;
       setUserData((prev) => ({ ...prev, name: name }));
-      // Move to next question with name
       const nextQ = currentQuestion + 1;
       setCurrentQuestion(nextQ);
       const nextQuestion = discoveryQuestions[nextQ].replace("{name}", name);
@@ -1084,6 +1129,20 @@ const SparkedIn = () => {
         setPhase("portfolio");
       }, 2000);
     }, 2000);
+  };
+
+  // Function to load sample media for demo
+  const loadSampleMedia = () => {
+    setUserData((prev) => ({
+      ...prev,
+      media: [...sampleMediaItems, ...prev.media],
+      stats: {
+        views: prev.stats.views + 579,
+        likes: prev.stats.likes + 146,
+        followers: prev.stats.followers + 23,
+      },
+      pathwayProgress: { ...prev.pathwayProgress, firstUpload: true },
+    }));
   };
 
   const handleKeyPress = (e) => {
@@ -1216,11 +1275,17 @@ const SparkedIn = () => {
           )}
           {item.type === "video" && (
             <div className="relative w-full h-full">
-              <img
-                src={item.thumbnail}
-                alt={item.title}
-                className="w-full h-full object-cover"
-              />
+              {item.thumbnail && item.thumbnail !== "sample" ? (
+                <img
+                  src={item.thumbnail}
+                  alt={item.title}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                  <Video className="w-16 h-16 text-white opacity-50" />
+                </div>
+              )}
               <div className="absolute inset-0 flex items-center justify-center bg-black/30">
                 <div className="bg-white/90 p-3 rounded-full">
                   <Play className="w-6 h-6 text-purple-600" />
@@ -1906,10 +1971,17 @@ const SparkedIn = () => {
                     <div className="font-semibold text-purple-900 mb-1">
                       Start building your portfolio!
                     </div>
-                    <p className="text-sm text-purple-800">
+                    <p className="text-sm text-purple-800 mb-2">
                       Upload your first piece of work. AI will help you write
                       professional descriptions.
                     </p>
+                    <button
+                      onClick={loadSampleMedia}
+                      className="text-sm bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2"
+                    >
+                      <Sparkles className="w-4 h-4" />
+                      Load Sample Media for Demo
+                    </button>
                   </div>
                 </div>
               </div>
@@ -1971,13 +2043,22 @@ const SparkedIn = () => {
               <p className="text-gray-500 text-sm mb-4">
                 Start building your portfolio by uploading your first piece
               </p>
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-full font-medium hover:shadow-lg transition-all inline-flex items-center gap-2"
-              >
-                <Plus className="w-4 h-4" />
-                Upload First Work
-              </button>
+              <div className="flex gap-3 justify-center">
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-full font-medium hover:shadow-lg transition-all inline-flex items-center gap-2"
+                >
+                  <Plus className="w-4 h-4" />
+                  Upload First Work
+                </button>
+                <button
+                  onClick={loadSampleMedia}
+                  className="bg-white border-2 border-purple-600 text-purple-600 px-6 py-2 rounded-full font-medium hover:bg-purple-50 transition-all inline-flex items-center gap-2"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  Load Sample Media
+                </button>
+              </div>
             </div>
           )}
         </div>
@@ -2065,17 +2146,45 @@ const SparkedIn = () => {
                       className="w-full rounded-lg"
                     />
                   )}
-                  {selectedMedia.type === "video" && (
-                    <div className="aspect-video bg-gray-900 rounded-lg flex items-center justify-center">
-                      <Play className="w-16 h-16 text-white" />
-                    </div>
-                  )}
+                  {selectedMedia.type === "video" &&
+                    selectedMedia.url !== "sample" && (
+                      <video
+                        ref={videoRef}
+                        controls
+                        className="w-full rounded-lg bg-black"
+                        src={selectedMedia.url}
+                      >
+                        Your browser does not support the video tag.
+                      </video>
+                    )}
+                  {selectedMedia.type === "video" &&
+                    selectedMedia.url === "sample" && (
+                      <div className="aspect-video bg-gray-900 rounded-lg flex flex-col items-center justify-center">
+                        <Play className="w-16 h-16 text-white mb-4" />
+                        <p className="text-white text-sm">
+                          Sample video demo - upload your own videos to see them
+                          play here
+                        </p>
+                      </div>
+                    )}
                   {selectedMedia.type === "audio" && (
                     <div className="bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg p-12 flex flex-col items-center justify-center">
                       <Music className="w-24 h-24 text-white mb-4" />
-                      <div className="text-white text-lg font-semibold">
+                      <div className="text-white text-lg font-semibold mb-2">
                         {selectedMedia.title}
                       </div>
+                      {selectedMedia.url !== "sample" && (
+                        <audio controls className="w-full max-w-md">
+                          <source src={selectedMedia.url} />
+                          Your browser does not support the audio element.
+                        </audio>
+                      )}
+                      {selectedMedia.url === "sample" && (
+                        <p className="text-white/90 text-sm text-center">
+                          Sample audio demo - upload your own audio to play it
+                          here
+                        </p>
+                      )}
                     </div>
                   )}
                 </div>
