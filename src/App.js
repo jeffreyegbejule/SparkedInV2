@@ -975,7 +975,8 @@ const SparkedIn = () => {
 
     // Usher Easter Egg
     if (userMessage.toLowerCase().includes("usher") && currentQuestion === 0) {
-      setUserData((prev) => ({ ...prev, name: userMessage }));
+      const name = userMessage;
+      setUserData((prev) => ({ ...prev, name: name }));
       setInputValue("");
       const nextQ = currentQuestion + 1;
       setCurrentQuestion(nextQ);
@@ -988,7 +989,14 @@ const SparkedIn = () => {
     setInputValue("");
 
     if (currentQuestion === 0) {
-      setUserData((prev) => ({ ...prev, name: userMessage }));
+      const name = userMessage;
+      setUserData((prev) => ({ ...prev, name: name }));
+      // Move to next question with name
+      const nextQ = currentQuestion + 1;
+      setCurrentQuestion(nextQ);
+      const nextQuestion = discoveryQuestions[nextQ].replace("{name}", name);
+      addBotMessage(nextQuestion);
+      return;
     }
 
     if (currentQuestion >= 1) {
