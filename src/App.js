@@ -66,11 +66,9 @@ const SparkedIn = () => {
   const [selectedMedia, setSelectedMedia] = useState(null);
   const [selectedCareer, setSelectedCareer] = useState(null);
   const [showShareModal, setShowShareModal] = useState(false);
-  const [showAnalytics, setShowAnalytics] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
   const [draggedItem, setDraggedItem] = useState(null);
   const [isGeneratingDescription, setIsGeneratingDescription] = useState(false);
-  const [showMentorConnect, setShowMentorConnect] = useState(false);
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
 
@@ -83,6 +81,7 @@ const SparkedIn = () => {
   ];
 
   const careerDatabase = [
+    // MUSIC
     {
       id: "music-producer",
       title: "Music Producer",
@@ -110,11 +109,76 @@ const SparkedIn = () => {
         "music",
         "creating",
         "technical",
-        "solo work",
         "beats",
         "producing",
+        "studio",
+        "producer",
       ],
     },
+    {
+      id: "singer-songwriter",
+      title: "Singer / Songwriter",
+      category: "Music",
+      description:
+        "Perform and create original music, build a fanbase, record albums",
+      dayInLife:
+        "Write songs, rehearse vocals, perform live shows, record in studio, promote music",
+      skills: [
+        "Vocal Performance",
+        "Songwriting",
+        "Stage Presence",
+        "Music Theory",
+      ],
+      portfolioNeeds: [
+        "Performance videos",
+        "Recorded tracks",
+        "Song demos",
+        "Live performance clips",
+      ],
+      salary: "$25K-$200K+",
+      demand: "High",
+      icon: "🎤",
+      sparkMatch: [
+        "singing",
+        "music",
+        "performing",
+        "vocals",
+        "songwriter",
+        "artist",
+        "singer",
+        "stage",
+        "usher",
+        "musician",
+      ],
+    },
+    {
+      id: "audio-engineer",
+      title: "Audio Engineer",
+      category: "Music",
+      description: "Record, mix, and master audio for music and media",
+      dayInLife:
+        "Set up recording sessions, mix tracks, master final audio, work with artists",
+      skills: ["Audio Engineering", "Mixing", "Mastering", "Technical Skills"],
+      portfolioNeeds: [
+        "Mixed tracks",
+        "Before/after samples",
+        "Studio session recordings",
+      ],
+      salary: "$35K-$85K",
+      demand: "High",
+      icon: "🎚️",
+      sparkMatch: [
+        "audio",
+        "engineering",
+        "mixing",
+        "mastering",
+        "sound",
+        "recording",
+        "technical",
+      ],
+    },
+
+    // MEDIA & CONTENT
     {
       id: "content-creator",
       title: "Content Creator / Influencer",
@@ -145,37 +209,11 @@ const SparkedIn = () => {
         "audience",
         "content",
         "camera",
-      ],
-    },
-    {
-      id: "event-producer",
-      title: "Event Producer",
-      category: "Sports & Entertainment",
-      description: "Plan and execute live events, concerts, and experiences",
-      dayInLife:
-        "Coordinate vendors, manage logistics, oversee event setup, handle crisis situations",
-      skills: [
-        "Project Management",
-        "Leadership",
-        "Problem Solving",
-        "Coordination",
-      ],
-      portfolioNeeds: [
-        "Event photos/videos",
-        "Vendor contracts",
-        "Budget sheets",
-        "Testimonials",
-      ],
-      salary: "$40K-$95K",
-      demand: "High",
-      icon: "🎪",
-      sparkMatch: [
-        "organizing",
-        "people",
-        "logistics",
-        "leadership",
-        "events",
-        "coordinating",
+        "influencer",
+        "youtube",
+        "tiktok",
+        "creator",
+        "digital",
       ],
     },
     {
@@ -202,51 +240,649 @@ const SparkedIn = () => {
       icon: "🎬",
       sparkMatch: [
         "video",
-        "storytelling",
-        "detail-oriented",
-        "technical",
         "editing",
         "filming",
+        "premiere",
+        "final cut",
+        "post-production",
       ],
     },
-  ];
+    {
+      id: "photographer",
+      title: "Photographer / Videographer",
+      category: "Media",
+      description:
+        "Capture moments for events, artists, brands, and publications",
+      dayInLife:
+        "Shoot events/portraits, edit photos, deliver to clients, build portfolio",
+      skills: [
+        "Photography",
+        "Video Production",
+        "Editing",
+        "Client Relations",
+      ],
+      portfolioNeeds: [
+        "Photo portfolio",
+        "Video samples",
+        "Client work",
+        "Personal projects",
+      ],
+      salary: "$35K-$90K",
+      demand: "High",
+      icon: "📸",
+      sparkMatch: [
+        "photography",
+        "camera",
+        "photos",
+        "visual",
+        "shooting",
+        "videography",
+      ],
+    },
 
-  const mentors = [
+    // FILM & TELEVISION
     {
-      id: 1,
-      name: "Sarah Williams",
-      role: "Music Producer",
-      company: "Atlantic Records",
-      avatar: "🎵",
-      expertise: "Music Production, Audio Engineering",
-      available: true,
+      id: "actor",
+      title: "Actor / Actress",
+      category: "Film & Television",
+      description: "Perform roles in film, TV, or theater productions",
+      dayInLife:
+        "Audition for roles, rehearse scenes, perform on set, work with directors",
+      skills: [
+        "Acting",
+        "Performance",
+        "Character Development",
+        "Improvisation",
+      ],
+      portfolioNeeds: ["Demo reel", "Headshots", "Performance clips", "Resume"],
+      salary: "$30K-$150K+",
+      demand: "High",
+      icon: "🎭",
+      sparkMatch: [
+        "acting",
+        "performance",
+        "film",
+        "theater",
+        "drama",
+        "screen",
+      ],
     },
     {
-      id: 2,
-      name: "Marcus Chen",
-      role: "Content Creator",
-      company: "2M+ Followers",
-      avatar: "📱",
-      expertise: "Social Media, Video Content",
-      available: true,
+      id: "director",
+      title: "Director",
+      category: "Film & Television",
+      description: "Oversee creative direction and vision of productions",
+      dayInLife:
+        "Lead creative decisions, direct actors, work with crew, shape final vision",
+      skills: ["Creative Direction", "Leadership", "Storytelling", "Vision"],
+      portfolioNeeds: [
+        "Director reel",
+        "Short films",
+        "Behind-the-scenes footage",
+      ],
+      salary: "$50K-$200K+",
+      demand: "Medium",
+      icon: "🎥",
+      sparkMatch: [
+        "directing",
+        "vision",
+        "filmmaking",
+        "creative",
+        "leadership",
+      ],
     },
     {
-      id: 3,
-      name: "Jessica Torres",
-      role: "Event Producer",
-      company: "Live Nation",
-      avatar: "🎪",
-      expertise: "Event Planning, Production",
-      available: false,
+      id: "cinematographer",
+      title: "Cinematographer",
+      category: "Film & Television",
+      description: "Capture visual motion picture images and lighting",
+      dayInLife:
+        "Design shot composition, operate cameras, manage lighting, collaborate with directors",
+      skills: [
+        "Cinematography",
+        "Camera Operation",
+        "Lighting",
+        "Visual Storytelling",
+      ],
+      portfolioNeeds: [
+        "Cinematography reel",
+        "Shot breakdowns",
+        "Lighting examples",
+      ],
+      salary: "$40K-$120K",
+      demand: "High",
+      icon: "🎞️",
+      sparkMatch: [
+        "camera",
+        "cinematography",
+        "film",
+        "lighting",
+        "visual",
+        "dop",
+      ],
     },
     {
-      id: 4,
-      name: "David Rodriguez",
-      role: "Creative Director",
-      company: "Sony Music",
-      avatar: "🎨",
-      expertise: "Branding, Design",
-      available: true,
+      id: "screenwriter",
+      title: "Screenwriter",
+      category: "Film & Television",
+      description: "Write scripts for film, television, and digital media",
+      dayInLife:
+        "Develop storylines, write dialogue, revise scripts, pitch ideas",
+      skills: ["Screenwriting", "Storytelling", "Dialogue", "Structure"],
+      portfolioNeeds: [
+        "Script samples",
+        "Treatments",
+        "Pitch decks",
+        "Writing portfolio",
+      ],
+      salary: "$35K-$150K+",
+      demand: "Medium",
+      icon: "✍️",
+      sparkMatch: [
+        "writing",
+        "screenwriting",
+        "scripts",
+        "storytelling",
+        "dialogue",
+      ],
+    },
+    {
+      id: "makeup-artist",
+      title: "Makeup Artist",
+      category: "Film & Television",
+      description: "Apply makeup for talent in productions",
+      dayInLife:
+        "Design makeup looks, apply cosmetics, maintain continuity, work with talent",
+      skills: [
+        "Makeup Artistry",
+        "Beauty",
+        "Attention to Detail",
+        "Character Design",
+      ],
+      portfolioNeeds: [
+        "Before/after photos",
+        "Look books",
+        "Character makeup samples",
+      ],
+      salary: "$30K-$80K",
+      demand: "High",
+      icon: "💄",
+      sparkMatch: ["makeup", "beauty", "cosmetics", "film", "special effects"],
+    },
+    {
+      id: "costume-designer",
+      title: "Costume Designer",
+      category: "Film & Television",
+      description: "Design clothing and costumes for productions",
+      dayInLife:
+        "Research period styles, sketch designs, source materials, fit costumes on talent",
+      skills: [
+        "Fashion Design",
+        "Costume Design",
+        "Sewing",
+        "Historical Research",
+      ],
+      portfolioNeeds: [
+        "Design sketches",
+        "Finished costumes",
+        "Mood boards",
+        "Production stills",
+      ],
+      salary: "$35K-$90K",
+      demand: "Medium",
+      icon: "👗",
+      sparkMatch: [
+        "costume",
+        "fashion",
+        "design",
+        "sewing",
+        "wardrobe",
+        "clothing",
+      ],
+    },
+    {
+      id: "set-designer",
+      title: "Set Designer",
+      category: "Film & Television",
+      description: "Build and design sets for productions",
+      dayInLife:
+        "Create set concepts, build structures, dress sets, manage props",
+      skills: [
+        "Set Design",
+        "Construction",
+        "Spatial Design",
+        "Problem Solving",
+      ],
+      portfolioNeeds: [
+        "Set photos",
+        "Design renderings",
+        "Build process documentation",
+      ],
+      salary: "$35K-$85K",
+      demand: "Medium",
+      icon: "🏗️",
+      sparkMatch: [
+        "set design",
+        "props",
+        "construction",
+        "building",
+        "production design",
+      ],
+    },
+    {
+      id: "sound-designer",
+      title: "Sound Designer",
+      category: "Film & Television",
+      description: "Create sound effects and audio environments",
+      dayInLife:
+        "Design soundscapes, create effects, mix audio, enhance storytelling through sound",
+      skills: [
+        "Sound Design",
+        "Audio Engineering",
+        "Creativity",
+        "Technical Skills",
+      ],
+      portfolioNeeds: [
+        "Sound design reels",
+        "Effects libraries",
+        "Project breakdowns",
+      ],
+      salary: "$40K-$95K",
+      demand: "High",
+      icon: "🔊",
+      sparkMatch: [
+        "sound design",
+        "audio",
+        "effects",
+        "foley",
+        "post-production",
+      ],
+    },
+
+    // PERFORMANCE
+    {
+      id: "dancer-choreographer",
+      title: "Dancer / Choreographer",
+      category: "Performance",
+      description:
+        "Perform dance routines and create choreography for artists, shows, and videos",
+      dayInLife:
+        "Rehearse routines, create choreography, perform at shows, teach dance classes",
+      skills: [
+        "Dance",
+        "Choreography",
+        "Physical Fitness",
+        "Creativity",
+        "Performance",
+      ],
+      portfolioNeeds: [
+        "Performance videos",
+        "Choreography reels",
+        "Class recordings",
+        "Competition footage",
+      ],
+      salary: "$30K-$100K",
+      demand: "High",
+      icon: "💃",
+      sparkMatch: [
+        "dancing",
+        "choreography",
+        "movement",
+        "performing",
+        "dance",
+        "hip hop",
+        "ballet",
+        "usher",
+      ],
+    },
+
+    // BUSINESS & MANAGEMENT
+    {
+      id: "talent-manager",
+      title: "Talent Manager",
+      category: "Business & Management",
+      description: "Manage and develop talent careers and branding",
+      dayInLife:
+        "Book opportunities, negotiate deals, develop talent brand, manage schedules",
+      skills: [
+        "Talent Management",
+        "Negotiation",
+        "Branding",
+        "Business Development",
+      ],
+      portfolioNeeds: [
+        "Client roster",
+        "Success stories",
+        "Deal memos",
+        "Case studies",
+      ],
+      salary: "$40K-$120K",
+      demand: "Medium",
+      icon: "🤝",
+      sparkMatch: [
+        "talent",
+        "management",
+        "branding",
+        "business",
+        "managing",
+        "artist",
+      ],
+    },
+    {
+      id: "event-producer",
+      title: "Event Producer",
+      category: "Business & Management",
+      description: "Plan and execute live events, concerts, and experiences",
+      dayInLife:
+        "Coordinate vendors, manage logistics, oversee event setup, handle crisis situations",
+      skills: [
+        "Project Management",
+        "Leadership",
+        "Problem Solving",
+        "Coordination",
+      ],
+      portfolioNeeds: [
+        "Event photos/videos",
+        "Vendor contracts",
+        "Budget sheets",
+        "Testimonials",
+      ],
+      salary: "$40K-$95K",
+      demand: "High",
+      icon: "🎪",
+      sparkMatch: [
+        "events",
+        "planning",
+        "coordination",
+        "organizing",
+        "production",
+        "concerts",
+        "logistics",
+      ],
+    },
+    {
+      id: "marketing-pr",
+      title: "Marketing & PR Specialist",
+      category: "Business & Management",
+      description: "Promote brands and manage public image",
+      dayInLife:
+        "Create campaigns, manage media relations, develop brand strategies, analyze metrics",
+      skills: ["Marketing", "Public Relations", "Branding", "Communication"],
+      portfolioNeeds: [
+        "Campaign results",
+        "Press releases",
+        "Brand strategies",
+        "Analytics reports",
+      ],
+      salary: "$40K-$90K",
+      demand: "Very High",
+      icon: "📢",
+      sparkMatch: [
+        "marketing",
+        "pr",
+        "branding",
+        "publicity",
+        "promotion",
+        "media",
+      ],
+    },
+    {
+      id: "social-media-manager",
+      title: "Social Media Manager",
+      category: "Business & Management",
+      description: "Grow and manage online presence for brands and artists",
+      dayInLife:
+        "Create content calendars, design posts, analyze metrics, engage with followers",
+      skills: [
+        "Social Media Marketing",
+        "Content Creation",
+        "Analytics",
+        "Communication",
+      ],
+      portfolioNeeds: [
+        "Growth case studies",
+        "Content samples",
+        "Analytics reports",
+        "Campaign results",
+      ],
+      salary: "$40K-$75K",
+      demand: "Very High",
+      icon: "📊",
+      sparkMatch: [
+        "social media",
+        "marketing",
+        "instagram",
+        "tiktok",
+        "twitter",
+        "facebook",
+        "digital",
+      ],
+    },
+    {
+      id: "casting-director",
+      title: "Casting Director",
+      category: "Business & Management",
+      description: "Select talent for roles and projects",
+      dayInLife:
+        "Review auditions, coordinate casting calls, select actors, negotiate with agents",
+      skills: [
+        "Casting",
+        "Talent Assessment",
+        "Negotiation",
+        "Industry Knowledge",
+      ],
+      portfolioNeeds: [
+        "Projects cast",
+        "Talent roster",
+        "Success stories",
+        "Industry connections",
+      ],
+      salary: "$45K-$100K",
+      demand: "Medium",
+      icon: "🎬",
+      sparkMatch: ["casting", "auditions", "talent", "selection", "actors"],
+    },
+    {
+      id: "business-development",
+      title: "Business Development Manager",
+      category: "Business & Management",
+      description: "Grow partnerships and revenue opportunities",
+      dayInLife:
+        "Build partnerships, negotiate deals, identify growth opportunities, develop strategies",
+      skills: [
+        "Business Development",
+        "Partnerships",
+        "Strategy",
+        "Negotiation",
+      ],
+      portfolioNeeds: [
+        "Partnership deals",
+        "Revenue growth metrics",
+        "Case studies",
+      ],
+      salary: "$50K-$120K",
+      demand: "High",
+      icon: "💼",
+      sparkMatch: [
+        "business",
+        "partnerships",
+        "growth",
+        "development",
+        "strategy",
+        "deals",
+      ],
+    },
+
+    // DESIGN & ANIMATION
+    {
+      id: "graphic-designer",
+      title: "Graphic Designer",
+      category: "Design & Animation",
+      description:
+        "Create visual content for brands, albums, merchandise, and more",
+      dayInLife:
+        "Design logos, create mockups, collaborate with clients, refine brand identity",
+      skills: [
+        "Graphic Design",
+        "Adobe Creative Suite",
+        "Branding",
+        "Visual Communication",
+      ],
+      portfolioNeeds: [
+        "Design portfolio",
+        "Logo work",
+        "Brand packages",
+        "Client testimonials",
+      ],
+      salary: "$38K-$75K",
+      demand: "High",
+      icon: "🎨",
+      sparkMatch: [
+        "design",
+        "graphics",
+        "visual",
+        "photoshop",
+        "illustrator",
+        "art",
+        "digital",
+      ],
+    },
+    {
+      id: "animator",
+      title: "Animator",
+      category: "Design & Animation",
+      description: "Create animated visuals and characters",
+      dayInLife:
+        "Design animations, create character movements, work on visual effects, collaborate with teams",
+      skills: ["Animation", "Motion Graphics", "Drawing", "Software Skills"],
+      portfolioNeeds: [
+        "Animation reels",
+        "Character designs",
+        "Motion graphics samples",
+      ],
+      salary: "$40K-$90K",
+      demand: "High",
+      icon: "🎞️",
+      sparkMatch: [
+        "animation",
+        "motion",
+        "drawing",
+        "animated",
+        "visual effects",
+        "vfx",
+      ],
+    },
+
+    // WRITING & JOURNALISM
+    {
+      id: "entertainment-journalist",
+      title: "Entertainment Journalist",
+      category: "Writing & Journalism",
+      description: "Write news and features about entertainment",
+      dayInLife:
+        "Research stories, conduct interviews, write articles, meet deadlines, pitch ideas",
+      skills: ["Writing", "Journalism", "Research", "Interviewing"],
+      portfolioNeeds: [
+        "Published articles",
+        "Interview clips",
+        "Writing samples",
+        "Blog portfolio",
+      ],
+      salary: "$35K-$75K",
+      demand: "Medium",
+      icon: "📰",
+      sparkMatch: [
+        "journalism",
+        "writing",
+        "reporting",
+        "articles",
+        "news",
+        "entertainment",
+      ],
+    },
+    {
+      id: "publicist",
+      title: "Publicist",
+      category: "Writing & Journalism",
+      description: "Manage publicity and media communication",
+      dayInLife:
+        "Write press releases, coordinate media, manage client image, handle crises",
+      skills: [
+        "Public Relations",
+        "Communication",
+        "Media Relations",
+        "Writing",
+      ],
+      portfolioNeeds: [
+        "Press coverage",
+        "Campaign results",
+        "Client testimonials",
+        "Media placements",
+      ],
+      salary: "$40K-$85K",
+      demand: "High",
+      icon: "📣",
+      sparkMatch: ["publicity", "media", "pr", "communication", "press"],
+    },
+
+    // SPORTS
+    {
+      id: "sports-broadcaster",
+      title: "Sports Broadcaster",
+      category: "Sports",
+      description: "Deliver live or recorded sports coverage",
+      dayInLife:
+        "Prepare commentary, deliver live broadcasts, analyze games, interview athletes",
+      skills: [
+        "Broadcasting",
+        "Communication",
+        "Sports Knowledge",
+        "Public Speaking",
+      ],
+      portfolioNeeds: [
+        "Broadcast reels",
+        "Commentary samples",
+        "Interview clips",
+      ],
+      salary: "$35K-$150K+",
+      demand: "Medium",
+      icon: "🎙️",
+      sparkMatch: [
+        "broadcasting",
+        "sports",
+        "commentary",
+        "announcing",
+        "media",
+      ],
+    },
+    {
+      id: "sports-marketing",
+      title: "Sports Marketing Manager",
+      category: "Sports",
+      description: "Market sports teams, brands, and events",
+      dayInLife:
+        "Create campaigns, manage fan engagement, coordinate sponsorships, analyze metrics",
+      skills: [
+        "Marketing",
+        "Sports Industry",
+        "Fan Engagement",
+        "Digital Marketing",
+      ],
+      portfolioNeeds: [
+        "Campaign results",
+        "Fan engagement metrics",
+        "Sponsorship deals",
+      ],
+      salary: "$42K-$95K",
+      demand: "High",
+      icon: "⚽",
+      sparkMatch: [
+        "sports",
+        "marketing",
+        "branding",
+        "outreach",
+        "fan engagement",
+      ],
     },
   ];
 
@@ -336,6 +972,19 @@ const SparkedIn = () => {
 
     const userMessage = inputValue;
     addUserMessage(userMessage);
+
+    // Usher Easter Egg
+    if (userMessage.toLowerCase().includes("usher") && currentQuestion === 0) {
+      setUserData((prev) => ({ ...prev, name: userMessage }));
+      setInputValue("");
+      const nextQ = currentQuestion + 1;
+      setCurrentQuestion(nextQ);
+      addBotMessage(
+        "Wow, Usher! That's incredible! 🎤✨ You know, this platform was built by Usher's New Look to help young people like you discover their creative paths. Let's find YOUR spark - what do you love to create or perform?"
+      );
+      return;
+    }
+
     setInputValue("");
 
     if (currentQuestion === 0) {
@@ -731,7 +1380,6 @@ const SparkedIn = () => {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                {/* Lightbulb outline */}
                 <path
                   d="M50 10 C35 10, 25 20, 25 35 C25 45, 30 52, 35 58 L35 70 C35 72, 37 75, 40 75 L60 75 C63 75, 65 72, 65 70 L65 58 C70 52, 75 45, 75 35 C75 20, 65 10, 50 10 Z"
                   stroke="white"
@@ -739,7 +1387,6 @@ const SparkedIn = () => {
                   fill="white"
                   fillOpacity="0.2"
                 />
-                {/* Bulb base */}
                 <rect
                   x="42"
                   y="75"
@@ -750,9 +1397,7 @@ const SparkedIn = () => {
                   stroke="white"
                   strokeWidth="2"
                 />
-                {/* Brain pattern inside bulb */}
                 <g transform="translate(50, 42)">
-                  {/* Left hemisphere curves */}
                   <path
                     d="M-8,-12 Q-12,-8 -10,-4 Q-12,0 -10,4 Q-12,8 -8,10"
                     stroke="white"
@@ -767,7 +1412,6 @@ const SparkedIn = () => {
                     fill="none"
                     opacity="0.7"
                   />
-                  {/* Right hemisphere curves */}
                   <path
                     d="M8,-12 Q12,-8 10,-4 Q12,0 10,4 Q12,8 8,10"
                     stroke="white"
@@ -782,7 +1426,6 @@ const SparkedIn = () => {
                     fill="none"
                     opacity="0.7"
                   />
-                  {/* Center connection */}
                   <line
                     x1="-8"
                     y1="-12"
@@ -796,7 +1439,6 @@ const SparkedIn = () => {
                   <circle cx="0" cy="0" r="1.5" fill="white" opacity="0.8" />
                   <circle cx="0" cy="6" r="1.5" fill="white" opacity="0.8" />
                 </g>
-                {/* Light rays */}
                 <line
                   x1="50"
                   y1="5"
@@ -862,7 +1504,6 @@ const SparkedIn = () => {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={(e) => {
                   if (e.key === "Enter" && inputValue.trim()) {
-                    setUserData((prev) => ({ ...prev, name: inputValue }));
                     setExtractedData([
                       {
                         text: inputValue,
@@ -870,6 +1511,7 @@ const SparkedIn = () => {
                       },
                     ]);
                     handleStartInterview();
+                    setInputValue("");
                   }
                 }}
                 placeholder="Tell me what you love to create..."
@@ -878,7 +1520,6 @@ const SparkedIn = () => {
               <button
                 onClick={() => {
                   if (inputValue.trim()) {
-                    setUserData((prev) => ({ ...prev, name: "Creative" }));
                     setExtractedData([
                       {
                         text: inputValue,
@@ -886,6 +1527,7 @@ const SparkedIn = () => {
                       },
                     ]);
                     handleStartInterview();
+                    setInputValue("");
                   }
                 }}
                 disabled={!inputValue.trim()}
